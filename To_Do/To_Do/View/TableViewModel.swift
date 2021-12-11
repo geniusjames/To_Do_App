@@ -7,33 +7,35 @@
 
 import UIKit
 
-class TableViewModel{
+class TableViewModel: UIView {
+    
+    
     
 }
 
-//
-//#if DEBUG && canImport(SwiftUI)
-//import SwiftUI
-//
-//struct ViewControllerLayoutPreview: PreviewProvider {
-//    static var previews: some View {
-//        BasePreviewProvider<TableViewModel>()
-//    }
-//}
-//
-//public struct BasePreviewProvider<_view:UIView>: UIViewRepresentable {
-//    public func makeUIView(context: UIViewRepresentableContext<BasePreviewProvider<_view>>) -> _view {
-//        return _view()
-//    }
-//
-//    public func updateUIView(_ uiView: _view, context: UIViewRepresentableContext<BasePreviewProvider<_view>>) {
-//
-//    }
-//
-//
-//    public typealias UIViewType = _view
-//    public init() {}
-//
-//}
-//
-//#endif
+
+#if DEBUG && canImport(SwiftUI)
+import SwiftUI
+
+struct ViewControllerLayoutPreview: PreviewProvider {
+    static var previews: some View {
+        BasePreviewProvider<TableViewModel>()
+    }
+}
+
+public struct BasePreviewProvider<_view:UIView>: UIViewRepresentable {
+    public func makeUIView(context: UIViewRepresentableContext<BasePreviewProvider<_view>>) -> _view {
+        return _view()
+    }
+
+    public func updateUIView(_ uiView: _view, context: UIViewRepresentableContext<BasePreviewProvider<_view>>) {
+
+    }
+
+
+    public typealias UIViewType = _view
+    public init() {}
+
+}
+
+#endif
