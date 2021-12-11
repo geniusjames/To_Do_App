@@ -12,6 +12,8 @@
 		0478C3DE2764ED1200AE5FB0 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3DD2764ED1200AE5FB0 /* MainCoordinator.swift */; };
 		0478C3E02764ED3B00AE5FB0 /* TodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3DF2764ED3B00AE5FB0 /* TodoViewController.swift */; };
 		0478C3E22764EEDB00AE5FB0 /* onBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E12764EEDB00AE5FB0 /* onBoardingViewController.swift */; };
+		0478C3E427651E0200AE5FB0 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E327651E0200AE5FB0 /* UIView+Extensions.swift */; };
+		0478C3E627651E9100AE5FB0 /* TextFieldLeftPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */; };
 		B463896A2764D9DF007C5E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46389692764D9DF007C5E1D /* AppDelegate.swift */; };
 		B463896C2764D9DF007C5E1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463896B2764D9DF007C5E1D /* SceneDelegate.swift */; };
 		B463896E2764D9DF007C5E1D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463896D2764D9DF007C5E1D /* ViewController.swift */; };
@@ -45,6 +47,8 @@
 		0478C3DD2764ED1200AE5FB0 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		0478C3DF2764ED3B00AE5FB0 /* TodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TodoViewController.swift; path = To_Do/Utilities/TodoViewController.swift; sourceTree = SOURCE_ROOT; };
 		0478C3E12764EEDB00AE5FB0 /* onBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onBoardingViewController.swift; sourceTree = "<group>"; };
+		0478C3E327651E0200AE5FB0 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLeftPadding.swift; sourceTree = "<group>"; };
 		B46389662764D9DF007C5E1D /* To_Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = To_Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46389692764D9DF007C5E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B463896B2764D9DF007C5E1D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,13 +98,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		0478C3CE2764EAA700AE5FB0 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		0478C3CF2764EACA00AE5FB0 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,15 +143,10 @@
 		0478C3D52764EBA500AE5FB0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0478C3E327651E0200AE5FB0 /* UIView+Extensions.swift */,
+				0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		0478C3D62764EBB200AE5FB0 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		B463895D2764D9DF007C5E1D = {
@@ -180,12 +172,10 @@
 		B46389682764D9DF007C5E1D /* To_Do */ = {
 			isa = PBXGroup;
 			children = (
-				0478C3D62764EBB200AE5FB0 /* Helpers */,
 				0478C3D52764EBA500AE5FB0 /* Utilities */,
 				0478C3D22764EB2700AE5FB0 /* Enum */,
 				0478C3D02764EAD500AE5FB0 /* Coordinator */,
 				0478C3CF2764EACA00AE5FB0 /* Protocol */,
-				0478C3CE2764EAA700AE5FB0 /* Model */,
 				0478C3CD2764EA9900AE5FB0 /* View */,
 				0478C3D12764EAF600AE5FB0 /* App */,
 				0478C3D32764EB5300AE5FB0 /* Resources */,
@@ -341,9 +331,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0478C3E627651E9100AE5FB0 /* TextFieldLeftPadding.swift in Sources */,
 				0478C3D82764EC0500AE5FB0 /* Coordinator.swift in Sources */,
 				0478C3DE2764ED1200AE5FB0 /* MainCoordinator.swift in Sources */,
 				0478C3E02764ED3B00AE5FB0 /* TodoViewController.swift in Sources */,
+				0478C3E427651E0200AE5FB0 /* UIView+Extensions.swift in Sources */,
 				0478C3E22764EEDB00AE5FB0 /* onBoardingViewController.swift in Sources */,
 				B463896E2764D9DF007C5E1D /* ViewController.swift in Sources */,
 				B463896A2764D9DF007C5E1D /* AppDelegate.swift in Sources */,

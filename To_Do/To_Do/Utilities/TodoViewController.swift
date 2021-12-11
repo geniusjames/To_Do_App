@@ -17,3 +17,16 @@ class TodoViewController:UIViewController{
         title = "Todo List"
     }
 }
+
+extension TodoViewController:UITableViewDataSource{
+    
+}
+
+extension TodoViewController:UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
+    }
+    
+}
+
+
