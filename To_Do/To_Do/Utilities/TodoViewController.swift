@@ -13,10 +13,11 @@ class TodoViewController:UIViewController{
     
     var todos = [
         
-        (title : "other", todo : [Todo(id: 4, title: "Eat", date: "Later", isDone: false)]),
+        (title : "Pending", todo : [Todo(id: 4, title: "Eat", date: "Later", isDone: false), Todo(id: 6, title: "cook", date: "today")
+                            ]),
         
-        (title : "today",
-        todo: [Todo(id: 4, title: "Code", date: "Today", isDone: true)]),
+        (title : "Completed",
+        todo: [Todo(id: 8, title: "Code", date: "Today", isDone: true)]),
     ]
     
     override func viewDidLoad() {
@@ -96,22 +97,39 @@ extension TodoViewController:UITableViewDataSource{
 }
 
 extension TodoViewController:UITableViewDelegate{
-    
-
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("item at \(indexPath) selected")
-    }
-    
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return UISwipeActionsConfiguration()
+        return todos[section].title
+    }
+        
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return UISwipeActionsConfiguration()
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        if editingStyle == .delete{
+            tableView.beginUpdates()
+            todos[section].todo.remove(at:row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
+            
     }
+//    
+//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        
+//        return UISwipeActionsConfiguration()
+//    
+//    }
+//    
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        return UISwipeActionsConfiguration()
+//    }
     
 }
 
