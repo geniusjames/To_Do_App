@@ -10,11 +10,12 @@ import Foundation
 class TodoConfig{
     
     let userDefault = UserDefaults.standard
-    var data: [Data]?
+    var data: [String:Data]?
+    
     
     init(){
-        guard let endcodedList = userDefault.object(forKey: "key") as? [Data] else {
-            data = []
+        guard let endcodedList = userDefault.object(forKey: "key2") as? [String:Data] else {
+            data = [:]
             return
             }
         data = endcodedList
@@ -22,32 +23,35 @@ class TodoConfig{
             
     
     func  createTask(task: TodoModel){
-        
+    
         let encoder = JSONEncoder()
         if let encodedData = try? encoder.encode(task){
-            data?.append(encodedData)
-            userDefault.set(data, forKey: "key")
+            print(type(of: encodedData))
             
+            data?[String(task.id)] = encodedData
+
+            print("also reached")
+            userDefault.set(data, forKey: "key2")
+            print("reached?")
         }
         
     }
-    func deleteTask(){
-        
+    func deleteTask(id: Int){
+        data?.removeValue(forKey: String(id))
+        userDefault.set(data, forKey: "key2")
     }
     func updateTask(){
         
     }
     func fetchTask(){
-        if let savedTasksEncoded = userDefault.object(forKey: "key") as? [Data] {
-            let decoder = JSONDecoder()
-            for i in savedTasksEncoded{
-                if let decodedTask = try? decoder.decode(TodoModel.self, from: i) {
-                    print("reached")
-                    print(decodedTask)
-                    print(decodedTask.title)
-                }
+        let decodeer = JSONDecoder()
+        if let savedTasksEncoded = (userDefault.dictionary(forKey: "key2")) as? [String:Data] {
+           let tasks = savedTasksEncoded.map{ keys, data in
+                let decodedTask = try! decodeer.decode(TodoModel.self, from: data)
+                print(type(of: decodedTask))
+                print(decodedTask)
             }
-            
+
         }
     }
 }
