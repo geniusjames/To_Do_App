@@ -26,13 +26,10 @@ class TodoConfig{
     
         let encoder = JSONEncoder()
         if let encodedData = try? encoder.encode(task){
-            print(type(of: encodedData))
             
             data?[String(task.id)] = encodedData
 
-            print("also reached")
             userDefault.set(data, forKey: "key2")
-            print("reached?")
         }
         
     }
@@ -40,18 +37,25 @@ class TodoConfig{
         data?.removeValue(forKey: String(id))
         userDefault.set(data, forKey: "key2")
     }
-    func updateTask(){
+    func updateTask(id: Int, updatedTask: TodoModel){
+            let encoder = JSONEncoder()
+            if let updatedEncodedTask = try? encoder.encode(updatedTask){
+                data?[String(id)] = updatedEncodedTask
+                userDefault.set(data, forKey: "key2")
+            }
         
     }
-    func fetchTask(){
+    func fetchTask() -> [TodoModel]{
         let decodeer = JSONDecoder()
         if let savedTasksEncoded = (userDefault.dictionary(forKey: "key2")) as? [String:Data] {
-           let tasks = savedTasksEncoded.map{ keys, data in
-                let decodedTask = try! decodeer.decode(TodoModel.self, from: data)
-                print(type(of: decodedTask))
-                print(decodedTask)
+           let tasks = savedTasksEncoded.map{ keys, data -> TodoModel in
+               let decodedTask: TodoModel = try! decodeer.decode(TodoModel.self, from: data)
+              
+               return decodedTask
             }
+            return tasks
 
         }
+        return []
     }
 }
