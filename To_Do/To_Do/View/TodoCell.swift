@@ -14,24 +14,31 @@ class TodoCell: UITableViewCell {
     static let reuseIdentifier = "TodoCell"
     let tableViewModel = TableViewModel()
     
-   
+    
     let todoLabel:UILabel = {
         let label = UILabel()
-        label.text = "Task 1"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         return label
     }()
-        
     
-
+    
+    let  checkbox:UIImageView = {
+        let image = UIImageView()
+        image.tintColor = .black
+        return image
+    }()
+    
+    
+    
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-//        setUpView()
     }
     
     
@@ -39,31 +46,54 @@ class TodoCell: UITableViewCell {
         setUpView()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        todoLabel.text = nil
+        checkbox.image = nil
+        
+        
+    }
+    
+    func configure(with todo:Todo){
+        updateUI(title: todo.title, image: todo.isDone ? "checkmark.square" : "app", color:  todo.isDone ? .systemGreen : .systemRed)
+        
+    }
+    
+
+    private func updateUI(title:String?, image:String, color:UIColor){
+        checkbox.image = UIImage(systemName: image)
+        checkbox.tintColor = color
+        todoLabel.text = title
+    }
+    
+    
+    
+    
     func setUpView(){
         
+        //        checkbox.image = UIImage(systemName: "checkmark.square")
         
-        let checkbox = checkBox("rectangle", contentView)
         contentView.addSubviews(checkbox, todoLabel)
         let size = contentView.frame.size.height - 6
         let fit = checkbox.sizeThatFits(contentView.frame.size)
         
         checkbox.frame = CGRect(x: 20, y: (contentView.frame.height - fit.height)/2, width: fit.width, height: fit.height)
-
+        
         
         todoLabel.frame = CGRect(x: 30 + checkbox.frame.size.width, y: 0, width: contentView.frame.size.width - 10 - size, height: contentView.frame.size.height)
         
-       
+        
         
         
     }
-
+    
     
 }
 
 
 struct Todo{
     let id:Int
-    var Title:String
+    var title:String
     var date:String
     var isDone:Bool = false
 }
