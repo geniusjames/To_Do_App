@@ -91,9 +91,4 @@ class TodoCell: UITableViewCell {
 }
 
 
-struct Todo{
-    let id:Int
-    var title:String
-    var date:String
-    var isDone:Bool = false
-}
+
