@@ -58,6 +58,28 @@ class TodoViewController:UIViewController{
         return tableView
     }()
     
+    private let fab:UIButton = {
+        let fab = UIButton()
+        fab.translatesAutoresizingMaskIntoConstraints = false
+        let image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28, weight: .medium))
+        fab.setImage(image, for: .normal)
+        fab.setTitleColor(.white, for: .normal)
+        fab.layer.cornerRadius = 30
+        fab.layer.masksToBounds = true
+        fab.tintColor = .white
+        fab.backgroundColor = .systemRed
+        
+        return fab
+    }()
+    
+    
+    @objc func popUp() {
+        
+        let alert = UIAlertController(title: "Add Todo", message: "Add your list of jobs", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
     
     
     func setUpTableView(){
@@ -69,7 +91,11 @@ class TodoViewController:UIViewController{
     
     
     func setUpView(){
-        view.addSubviews(tableView)
+        view.addSubviews(tableView, fab)
+        
+        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
+        
+//        fab.frame = CGRect(x: view.frame.size.width - 70, y: view.frame.size.height - 1000, width: 60, height: 60)
         
         let layout = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
@@ -78,6 +104,13 @@ class TodoViewController:UIViewController{
             tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 10),
             tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor, constant: -30),
+            
+            fab.bottomAnchor.constraint(equalTo: layout.bottomAnchor, constant: -30),
+            fab.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
+            fab.widthAnchor.constraint(equalToConstant: 60),
+            fab.heightAnchor.constraint(equalToConstant: 60)
+            
+            
             
             
         ])
