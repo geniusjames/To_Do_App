@@ -21,14 +21,17 @@ class MainCoordinator: Coordinator{
     }
     
    
-    func eventOccurred(with type: Event) {
+    func eventOccurred(with type: Event, todoTitle:String = "") {
         switch type {
             
        
         case .todo:
             print("todo screen")
         case .detail:
-            print("detail screen")
+            let vc = ViewController()
+            vc.todoTitle = todoTitle
+            vc.coordinator = self
+            navigationController?.pushViewController(vc, animated: false)
         }
     }
     

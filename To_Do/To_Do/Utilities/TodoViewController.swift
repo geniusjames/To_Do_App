@@ -34,10 +34,10 @@ class TodoViewController:UIViewController{
     var todos = [
         
         (title : "Pending", todo : [Todo(id: 4, title: "Eat", date: "Later", isDone: false), Todo(id: 6, title: "cook", date: "today")
-                            ]),
+                                   ]),
         
         (title : "Completed",
-        todo: [Todo(id: 8, title: "Code", date: "Today", isDone: true)]),
+         todo: [Todo(id: 8, title: "Code", date: "Today", isDone: true)]),
     ]
     
     override func viewDidLoad() {
@@ -70,19 +70,25 @@ class TodoViewController:UIViewController{
     
     func setUpView(){
         view.addSubviews(tableView)
-    
+        
         let layout = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-        
+            
             tableView.topAnchor.constraint(equalTo: layout.topAnchor, constant: 5),
             tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 10),
             tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor, constant: -30),
             
-           
+            
         ])
         
-      
+        
+    }
+    
+    
+    func gotoDetailsPage(todo:String){
+        coordinator?.eventOccurred(with: .detail, todoTitle: todo)
+        
     }
 }
 
@@ -106,7 +112,7 @@ extension TodoViewController:UITableViewDataSource{
         let section = indexPath.section
         let row = indexPath.row
         let todo = todos[section].todo[row]
-
+        
         todoCell.configure(with: todo)
         
         return todoCell
@@ -115,7 +121,7 @@ extension TodoViewController:UITableViewDataSource{
     
     
     
-
+    
     
     
 }
@@ -125,6 +131,10 @@ extension TodoViewController:UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
+        if todos[section].todo.isEmpty {
+            return nil
+        }
+        
         return todos[section].title
     }
     
@@ -132,103 +142,56 @@ extension TodoViewController:UITableViewDelegate {
         return true
     }
     
-
-        
     
-//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//        return .delete
-//    }
-//
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//
-//        let section = indexPath.section
-//        let row = indexPath.row
-//
-//        if editingStyle == .delete{
-//            tableView.beginUpdates()
-//            todos[section].todo.remove(at:row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//            tableView.endUpdates()
-//        }
-//
-//    }
-//    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let section = indexPath.section
         let row = indexPath.row
-        let todo = todos[section].todo[row]
-
-        print(todo)
-      }
-      
-      func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let todo = todos[section].todo[row].title
+        gotoDetailsPage(todo: todo)
         
-        // delete
-        let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
-          print("Delete: \(indexPath.row + 1)")
-          completionHandler(true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let section = indexPath.section
+        let row = indexPath.row
+        let delete = UIContextualAction(style: .normal, title: "Delete") { [self]  (action, view, completionHandler) in
+            tableView.beginUpdates()
+            self.todos[section].todo.remove(at:row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+            
+            completionHandler(true)
         }
         delete.image = UIImage(systemName: "trash")
         delete.backgroundColor = .red
         
-        // share
-        let share = UIContextualAction(style: .normal, title: "Share") { (action, view, completionHandler) in
-          print("Share: \(indexPath.row + 1)")
-          completionHandler(true)
-        }
-        share.image = UIImage(systemName: "square.and.arrow.up")
-        share.backgroundColor = .blue
-        
-        // download
-        let download = UIContextualAction(style: .normal, title: "Download") { (action, view, completionHandler) in
-          print("Download: \(indexPath.row + 1)")
-          completionHandler(true)
-        }
-        download.image = UIImage(systemName: "arrow.down")
-        download.backgroundColor = .green
-        
-        
-        // swipe
-        let swipe = UISwipeActionsConfiguration(actions: [delete, share, download])
+        let swipe = UISwipeActionsConfiguration(actions: [delete])
         
         return swipe
         
-      }
-      
-      
-      func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // favorite
-        let favorite = UIContextualAction(style: .normal, title: "favorite") { (action, view, completionHandler) in
-          print("favorite: \(indexPath.row + 1)")
-          completionHandler(true)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        let completed = UIContextualAction(style: .normal, title: "Completed") {[self] (action, view, completionHandler) in
+            self.todos[section].todo[row].isDone = true
+            tableView.reloadData()
+            completionHandler(true)
         }
-        favorite.image = UIImage(systemName: "suit.heart.fill")
-        favorite.backgroundColor = .systemPink
         
-        // share
-        let profile = UIContextualAction(style: .normal, title: "profile") { (action, view, completionHandler) in
-          print("profile: \(indexPath.row + 1)")
-          completionHandler(true)
-        }
-        profile.image = UIImage(systemName: "person.fill")
-        profile.backgroundColor = .yellow
+        completed.image = UIImage(systemName: "checkmark")
+        completed.backgroundColor = .green
         
-        // download
-        let report = UIContextualAction(style: .normal, title: "report") { (action, view, completionHandler) in
-          print("report: \(indexPath.row + 1)")
-          completionHandler(true)
-        }
-        report.image = UIImage(systemName: "person.crop.circle.badge.xmark")
-        report.backgroundColor = .lightGray
-        
-        
-        // swipe
-        let swipe = UISwipeActionsConfiguration(actions: [profile, favorite, report])
+        let swipe = UISwipeActionsConfiguration(actions: [completed])
         
         return swipe
-      }
-      
+    }
+    
     
 }
 
