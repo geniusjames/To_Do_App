@@ -9,11 +9,13 @@ import UIKit
 
 class ViewController: UIViewController {
     var coordinator:Coordinator?
+    
+    var todoTitle = "Todo List"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Todo Detail"
+        title = "\(todoTitle)"
     }
 
 
