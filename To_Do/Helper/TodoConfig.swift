@@ -10,24 +10,31 @@ import Foundation
 class TodoConfig{
     
     let userDefault = UserDefaults.standard
+    var count: Int
     var data: [String:Data]?
     
     
     init(){
         guard let endcodedList = userDefault.object(forKey: "key2") as? [String:Data] else {
+            
             data = [:]
+            count = 0
             return
             }
+        count = userDefault.integer(forKey: "count")
         data = endcodedList
         }
             
     
     func  createTask(task: TodoModel){
-    
+        var task = task
+        let id = count + 1
+        task.id = id
+        userDefault.set(id, forKey: "count")
         let encoder = JSONEncoder()
         if let encodedData = try? encoder.encode(task){
             
-            data?[String(task.id)] = encodedData
+            data?[String(id)] = encodedData
 
             userDefault.set(data, forKey: "key2")
         }
