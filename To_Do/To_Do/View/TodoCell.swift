@@ -18,7 +18,8 @@ class TodoCell: UITableViewCell {
     let todoLabel:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         return label
     }()
     
@@ -55,7 +56,7 @@ class TodoCell: UITableViewCell {
     }
     
     func configure(with todo:Todo){
-        updateUI(title: todo.title, image: todo.isDone ? "checkmark.square" : "app", color:  todo.isDone ? .systemGreen : .systemRed)
+        updateUI(title: todo.title, image: todo.isDone ? "checkmark.square" : "app", color:  todo.isDone ? .systemGreen : .systemGray)
         
     }
     

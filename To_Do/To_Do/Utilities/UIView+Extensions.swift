@@ -23,6 +23,12 @@ public extension UIView {
     }
     
     
+    func setBack(navigationController:UINavigationController){
+        let navBar = navigationController.navigationBar
+        navBar.scrollEdgeAppearance =  UINavigationBarAppearance()
+        navBar.backgroundColor = .lightGray.withAlphaComponent(0.2)
+    }
+    
     
 }
 

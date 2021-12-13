@@ -33,16 +33,17 @@ class TodoViewController:UIViewController{
     
     var todos = [
         
-        (title : "Pending", todo : [Todo(id: 4, title: "Eat", date: "Later", isDone: false), Todo(id: 6, title: "cook", date: "today")
+        (title : "Pending", todo : [Todo(id: 4, title: "Go to the end of the  Eat", date: "Later", isDone: false), Todo(id: 6, title: "cook everything cookable", date: "today")
                                    ]),
         
         (title : "Completed",
-         todo: [Todo(id: 8, title: "Code", date: "Today", isDone: true)]),
+         todo: [Todo(id: 8, title: "Code my mind out from reality", date: "Today", isDone: true)]),
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.setBack(navigationController: self.navigationController!)
         title = "Todo List"
     }
     
@@ -55,7 +56,15 @@ class TodoViewController:UIViewController{
         let tableView = UITableView()
         tableView.frame = view.frame
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .systemGray.withAlphaComponent(0.05)
         return tableView
+    }()
+    
+     var bottomView:UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 40
+        return view
     }()
     
     private let fab:UIButton = {
@@ -73,14 +82,18 @@ class TodoViewController:UIViewController{
     }()
     
     
-    @objc func popUp() {
-        
-        let alert = UIAlertController(title: "Add Todo", message: "Add your list of jobs", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alert, animated: true)
-    }
-    
-    
+//    func popUp(_sender: UIButton) {
+//
+////        let alert = UIAlertController(title: "Add Todo", message: "Add your list of jobs", preferredStyle: .actionSheet)
+////        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+////        present(alert, animated: true)
+//
+//        UIView.animate(withDuration: 0.3, animations: {
+//            )
+////        }, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+//    }
+//
+//}
     
     func setUpTableView(){
         tableView.dataSource = self
@@ -91,9 +104,10 @@ class TodoViewController:UIViewController{
     
     
     func setUpView(){
-        view.addSubviews(tableView, fab)
+        bottomView.backgroundColor = .red
+        view.addSubviews(tableView, fab, bottomView)
         
-        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
+//        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
         
 //        fab.frame = CGRect(x: view.frame.size.width - 70, y: view.frame.size.height - 1000, width: 60, height: 60)
         
@@ -101,9 +115,15 @@ class TodoViewController:UIViewController{
         NSLayoutConstraint.activate([
             
             tableView.topAnchor.constraint(equalTo: layout.topAnchor, constant: 5),
-            tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 10),
-            tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -10),
-            tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor, constant: -30),
+            tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor),
+            
+            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            bottomView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.0),
             
             fab.bottomAnchor.constraint(equalTo: layout.bottomAnchor, constant: -30),
             fab.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
