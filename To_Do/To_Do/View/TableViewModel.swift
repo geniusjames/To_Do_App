@@ -8,9 +8,8 @@
 import UIKit
 
 class TableViewModel: UIView {
-    
-    
-    
+
+
 }
 
 

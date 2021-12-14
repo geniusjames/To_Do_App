@@ -45,6 +45,8 @@ class TodoConfig{
         userDefault.set(data, forKey: "key2")
     }
     func updateTask(id: Int, updatedTask: TodoModel){
+        var updatedTask = updatedTask
+        updatedTask.id = id
             let encoder = JSONEncoder()
             if let updatedEncodedTask = try? encoder.encode(updatedTask){
                 data?[String(id)] = updatedEncodedTask

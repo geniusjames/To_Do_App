@@ -24,7 +24,7 @@
 		B46389812764D9E0007C5E1D /* To_DoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46389802764D9E0007C5E1D /* To_DoTests.swift */; };
 		B463898B2764D9E0007C5E1D /* To_DoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463898A2764D9E0007C5E1D /* To_DoUITests.swift */; };
 		B463898D2764D9E0007C5E1D /* To_DoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463898C2764D9E0007C5E1D /* To_DoUITestsLaunchTests.swift */; };
-		B4F7ECAB2764F787008E56A2 /* TodoConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F7ECAA2764F787008E56A2 /* TodoConfig.swift */; };
+		B4D6A2602767896300CBA750 /* TodoConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F7ECAA2764F787008E56A2 /* TodoConfig.swift */; };
 		B4F7ECAD2764F7A6008E56A2 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F7ECAC2764F7A6008E56A2 /* TodoModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -362,6 +362,7 @@
 				0478C3E627651E9100AE5FB0 /* TextFieldLeftPadding.swift in Sources */,
 				0478C3D82764EC0500AE5FB0 /* Coordinator.swift in Sources */,
 				0478C3E82765233700AE5FB0 /* TableViewModel.swift in Sources */,
+				B4D6A2602767896300CBA750 /* TodoConfig.swift in Sources */,
 				0478C3DE2764ED1200AE5FB0 /* MainCoordinator.swift in Sources */,
 				B4F7ECAD2764F7A6008E56A2 /* TodoModel.swift in Sources */,
 				0478C3E02764ED3B00AE5FB0 /* TodoViewController.swift in Sources */,
