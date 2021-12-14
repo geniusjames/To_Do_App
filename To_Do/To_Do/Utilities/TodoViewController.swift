@@ -33,11 +33,11 @@ class TodoViewController:UIViewController{
     
     var todos = [
         
-        (title : "Pending", todo : [Todo(id: 4, title: "Go to the end of the  Eat", date: "Later", isDone: false), Todo(id: 6, title: "cook everything cookable", date: "today")
+        (title : "Pending", todo : [Todo(id: 4, title: "Finish Game of Thrones", date: "Later", isDone: false), Todo(id: 6, title: "cook everything cookable", date: "today")
                                    ]),
         
         (title : "Completed",
-         todo: [Todo(id: 8, title: "Code my mind out from reality", date: "Today", isDone: true)]),
+         todo: [Todo(id: 8, title: "          Feed the cat", date: "Today", isDone: true)]),
     ]
     
     override func viewDidLoad() {
