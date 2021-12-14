@@ -128,19 +128,13 @@ class TodoViewController:UIViewController{
         btn.setTitle("Save", for: .normal)
         btn.setTitleColor(.white, for: .normal)
         btn.layer.cornerRadius = 5
-        btn.backgroundColor = .red
+        btn.backgroundColor = .systemBlue
         return btn
     }()
 
     
 
 
-    
-    
-    
-    
-    
-  
     
     private var isBootomViewActive = false
     
