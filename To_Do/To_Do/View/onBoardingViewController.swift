@@ -20,19 +20,19 @@ class onBoardingViewController: UIViewController {
         let data5 = TodoModel(title: "Mummy", description: "nil", date: "my date", time: "my time", isDone: false)
 //        let data6 = TodoModel(title: "Mummy Updated", description: "nil", date: "my date", time: "my time", isDone: false)
         let todo = TodoConfig()
-//        print("title")
-//        todo.createTask(task: data3)
-//        todo.createTask(task: data2)
+        todo.createTask(task: data3)
+        todo.createTask(task: data2)
 //        todo.createTask(task: data3)
 //        todo.createTask(task: data5)
 //        todo.createTask(task: data2)
 
 //        todo.fetchTask()
 //        todo.createTask(task: data2)
+        for i in 31...34{
+            todo.deleteTask(id: 30)
+
+        }
         
-        todo.deleteTask(id: 30)
-        todo.deleteTask(id: 29)
-        todo.deleteTask(id: 28)
 
         //        todo.deleteTask(id: 21)
 //        todo.deleteTask(id: 20)
