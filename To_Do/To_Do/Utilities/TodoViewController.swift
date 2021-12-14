@@ -7,43 +7,39 @@
 
 import UIKit
 
-class Todo{
-    let id:Int
-    var title:String
-    var date:String
-    var isDone:Bool
-    
-    init(id:Int, title:String, date:String, isDone:Bool = false){
-        self.id = id
-        self.title = title
-        self.date = date
-        self.isDone = isDone
-    }
-}
-
-
-
-
 class TodoViewController:UIViewController{
     var coordinator:Coordinator?
     var todoConfig = TodoConfig()
     
-   
-    var todos = [
+    var todos:[(title: String, todo: [TodoModel])]?
+    
+    func separate(_ todoList: [TodoModel]) -> [(title: String, todo: [TodoModel])]{
+            var pending = [TodoModel]()
+        var completed = [TodoModel]()
         
-        (title : "Pending", todo : [Todo(id: 4, title: "Finish Game of Thrones", date: "Later", isDone: false), Todo(id: 6, title: "cook everything cookable", date: "today")
-                                   ]),
         
-        (title : "Completed",
-         todo: [Todo(id: 8, title: "          Feed the cat", date: "Today", isDone: true)]),
-    ]
+        for i in 0...todoList.count - 1 {
+            if todoList[i].isDone == false {
+                pending.append(todoList[i])
+           
+            }
+            else {
+                completed.append(todoList[i])
+            }
+        }
+        return [(title: "pending", todo: pending), (title: "completed", todo: completed) ]
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var todoList = todoConfig.fetchTask()
-        print(todoList)
         view.setBack(navigationController: self.navigationController!)
         title = "Todo List"
+    
+        let todoList = todoConfig.fetchTask()
+        
+         todos = separate(todoList)
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -82,6 +78,25 @@ class TodoViewController:UIViewController{
         return fab
     }()
     
+    var todoTitle:TextFieldLeftPadding = {
+        var textField = TextFieldLeftPadding()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textField.isUserInteractionEnabled = false
+        textField.layer.cornerRadius = 10
+        textField.backgroundColor = .lightGray.withAlphaComponent(0.2)
+        return textField
+    }()
+    
+    var todoDescription:TextFieldLeftPadding = {
+        var textField = TextFieldLeftPadding()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        textField.isUserInteractionEnabled = false
+        textField.layer.cornerRadius = 10
+        textField.backgroundColor = .lightGray.withAlphaComponent(0.2)
+        return textField
+    }()
     
     
   
@@ -140,9 +155,9 @@ class TodoViewController:UIViewController{
         NSLayoutConstraint.activate([
             
             tableView.topAnchor.constraint(equalTo: layout.topAnchor, constant: 5),
-            tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor),
+                        tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+                        tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
+                        tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor),
             
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -171,12 +186,12 @@ class TodoViewController:UIViewController{
 extension TodoViewController:UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return todos.count
+        return todos?.count ?? 0
         
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return todos[section].todo.count
+        return todos?[section].todo.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -187,18 +202,17 @@ extension TodoViewController:UITableViewDataSource{
         
         let section = indexPath.section
         let row = indexPath.row
-        let todo = todos[section].todo[row]
+        if let todo = todos?[section].todo[row]  {
+            todoCell.configure(with: todo)
+        }
         
-        todoCell.configure(with: todo)
+        
         
         return todoCell
         
     }
     
-    
-    
-    
-    
+
     
 }
 
@@ -206,12 +220,12 @@ extension TodoViewController:UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        if todos[section].todo.isEmpty {
+
+        if todos?[section].todo.count ?? 0 <= 0  {
             return nil
         }
         
-        return todos[section].title
+        return todos?[section].title
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -223,8 +237,8 @@ extension TodoViewController:UITableViewDelegate {
         
         let section = indexPath.section
         let row = indexPath.row
-        let todo = todos[section].todo[row].title
-        gotoDetailsPage(todo: todo)
+        let todo = todos?[section].todo[row].title
+        gotoDetailsPage(todo: todo ?? "")
         
     }
     
@@ -233,8 +247,10 @@ extension TodoViewController:UITableViewDelegate {
         let row = indexPath.row
         let delete = UIContextualAction(style: .normal, title: "Delete") { [self]  (action, view, completionHandler) in
             tableView.beginUpdates()
-            self.todos[section].todo.remove(at:row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let todo = todos?[section].todo[row].id ?? 0
+            todos?[section].todo.remove(at:row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            todoConfig.deleteTask(id: todo)
             tableView.endUpdates()
             
             completionHandler(true)
@@ -249,14 +265,24 @@ extension TodoViewController:UITableViewDelegate {
     }
     
     
+    
+    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let section = indexPath.section
         let row = indexPath.row
         
         let completed = UIContextualAction(style: .normal, title: "Completed") {[self] (action, view, completionHandler) in
-            self.todos[section].todo[row].isDone = true
+            tableView.beginUpdates()
+        let todo = todos?[section].todo[row]
+            todos?[section].todo[row].isDone = true
+            
+            let user = TodoModel(title: todo?.title ?? "", description: todo?.description ?? "", date: todo?.date ?? "", time: todo?.time ?? "", isDone: true)
+            todoConfig.updateTask(id: todo?.id ?? 0, updatedTask: user)
+            self.viewDidLoad()
+         self.view.setNeedsLayout()
             tableView.reloadData()
+            tableView.endUpdates()
             completionHandler(true)
         }
         

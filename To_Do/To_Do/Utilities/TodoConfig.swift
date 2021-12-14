@@ -16,7 +16,7 @@ class TodoConfig {
     init(){
         guard let endcodedList = userDefault.object(forKey: "key2") as? [String:Data] else {
             data = [:]
-            count = 0
+            count = 1
             return
             }
         count = userDefault.integer(forKey: "count")
@@ -38,6 +38,8 @@ class TodoConfig {
     func deleteTask(id: Int){
         data?.removeValue(forKey: String(id))
         userDefault.set(data, forKey: "key2")
+//        tableView.reloadData()
+
     }
     func updateTask(id: Int, updatedTask: TodoModel){
         var updatedTask = updatedTask
