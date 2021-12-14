@@ -66,11 +66,13 @@ class TodoViewController:UIViewController{
         return view
     }()
     
+    let add = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28, weight: .medium))
+    
+    let cancel = UIImage(systemName: "clear", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28, weight: .medium))
+    
     private let fab:UIButton = {
         let fab = UIButton()
         fab.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28, weight: .medium))
-        fab.setImage(image, for: .normal)
         fab.setTitleColor(.white, for: .normal)
         fab.layer.cornerRadius = 30
         fab.layer.masksToBounds = true
@@ -82,43 +84,39 @@ class TodoViewController:UIViewController{
     
     
     
-    private let closeButton:UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(systemName: "clear.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28, weight: .medium))
-        button.setImage(image, for: .normal)
-        button.tintColor = .white
-        return button
-    }()
+  
     
     private var isBootomViewActive = false
     
     @objc func popUp() {
+        
         if isBootomViewActive {
+            self.fab.setImage(self.cancel, for: .normal)
+            self.bottomView.removeConstraint(bottomView.constraints.last!)
             UIView.animate(withDuration: 0.3, animations: {
-                self.bottomView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                
+             self.bottomView.heightAnchor.constraint(equalToConstant: 0).isActive = true
                 self.view.layoutIfNeeded()
-        }) {(status) in
-            
+        
+                
+            }) {(status) in
             self.isBootomViewActive = false
-        }
+               
+            }
         }
         else {
+            self.fab.setImage(self.add, for: .normal)
+            for i in self.bottomView.constraints{
+                self.bottomView.removeConstraint(i)
+            }
             UIView.animate(withDuration: 0.3, animations: {
                 self.bottomView.heightAnchor.constraint(equalToConstant: 430).isActive = true
-//                self.fab.setImage(UIImage(systemName: "clear"), for: .normal)
                 self.view.layoutIfNeeded()
             }) {(status)  in
-                
                 self.isBootomViewActive = true
-                print(self.isBootomViewActive)
             }
-            
         }
-      
-    }
-
-
+}
     
     func setUpTableView(){
         tableView.dataSource = self
@@ -130,16 +128,13 @@ class TodoViewController:UIViewController{
     
     func setUpView(){
         
-        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
         
-//        bottomView.addSubview(closeButton)
+        fab.setImage(add, for: .normal)
+        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
         bottomView.backgroundColor = .red
         view.addSubviews(tableView, fab, bottomView)
         
-//        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
-//        closeButton.addTarget(self, action: #selector(popUp), for: .touchUpInside)
-        
-//        fab.frame = CGRect(x: view.frame.size.width - 70, y: view.frame.size.height - 1000, width: 60, height: 60)
+
         
         let layout = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
