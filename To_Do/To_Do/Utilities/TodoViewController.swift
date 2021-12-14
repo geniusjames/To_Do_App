@@ -57,6 +57,9 @@ class TodoViewController:UIViewController{
     
      var bottomView:UIView = {
         let view = UIView()
+         view.layer.borderColor = UIColor.black.cgColor
+         view.layer.borderWidth = 1
+         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 40
         return view
@@ -78,25 +81,63 @@ class TodoViewController:UIViewController{
         return fab
     }()
     
+    
     var todoTitle:TextFieldLeftPadding = {
         var textField = TextFieldLeftPadding()
+        textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Title"
+        textField.autocorrectionType = .no
         textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        textField.isUserInteractionEnabled = false
+        textField.layer.borderWidth = 1
         textField.layer.cornerRadius = 10
-        textField.backgroundColor = .lightGray.withAlphaComponent(0.2)
+        textField.layer.borderWidth = 1
         return textField
     }()
     
     var todoDescription:TextFieldLeftPadding = {
         var textField = TextFieldLeftPadding()
+        textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        textField.isUserInteractionEnabled = false
+        textField.heightAnchor.constraint(equalToConstant: 80).isActive = true
         textField.layer.cornerRadius = 10
-        textField.backgroundColor = .lightGray.withAlphaComponent(0.2)
+        textField.placeholder =  "Description"
+        textField.autocorrectionType = .no
+        textField.layer.borderWidth = 1
         return textField
     }()
+    
+
+    
+    var todoDateTime:TextFieldLeftPadding = {
+        var textField = TextFieldLeftPadding()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "15/11/2021 2:00pm"
+        textField.autocorrectionType = .no
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        textField.widthAnchor.constraint(equalToConstant: 170).isActive = true
+        textField.layer.borderWidth = 1
+        textField.layer.cornerRadius = 10
+        return textField
+    }()
+    
+    let saveButton:UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("Save", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.layer.cornerRadius = 5
+        btn.backgroundColor = .red
+        return btn
+    }()
+
+    
+
+
+    
+    
+    
     
     
   
@@ -133,6 +174,32 @@ class TodoViewController:UIViewController{
         }
 }
     
+    
+    
+    var param = [String:String]()
+    
+    @objc func save() {
+
+        param["title"] =  todoTitle.text ?? ""
+        param["desc"]  = todoDescription.text ?? ""
+        param["date"]  = todoDateTime.text
+        
+        let todo = TodoModel(title: param["title"] ?? "",  description: param["desc"] ?? "", date: param["date"] ?? "")
+        
+        todoConfig.createTask(task: todo)
+        tableView.reloadData()
+        resetAllTextField()
+        popUp()
+    }
+    
+    func resetAllTextField() {
+        todoTitle.text = ""
+        todoDescription.text = ""
+        todoDateTime.text = ""
+            
+    }
+    
+    
     func setUpTableView(){
         tableView.dataSource = self
         tableView.delegate = self
@@ -142,11 +209,44 @@ class TodoViewController:UIViewController{
     
     
     func setUpView(){
-        
-        
+    
         fab.setImage(add, for: .normal)
         fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
-        bottomView.backgroundColor = .red
+        saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+       
+        bottomView.addSubview(todoTitle)
+        bottomView.addSubview(todoDescription)
+        bottomView.addSubview(todoDateTime)
+        bottomView.addSubview(saveButton)
+        
+        
+        NSLayoutConstraint.activate([
+            
+            todoTitle.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 30),
+           
+            todoTitle.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 15),
+            todoTitle.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -15),
+            
+            todoDescription.topAnchor.constraint(equalTo:todoTitle.bottomAnchor, constant: 20),
+           
+            todoDescription.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 15),
+            todoDescription.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -15),
+            
+            todoDateTime.topAnchor.constraint(equalTo:todoDescription.bottomAnchor, constant: 20),
+           
+            todoDateTime.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 15),
+            todoDateTime.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -15),
+            
+            saveButton.topAnchor.constraint(equalTo: todoDateTime.bottomAnchor, constant: 30),
+            saveButton.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 15),
+            saveButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -15),
+            saveButton.heightAnchor.constraint(equalToConstant: 60),
+            
+            
+        ])
+        
+        
+        
         view.addSubviews(tableView, fab, bottomView)
         
 
@@ -172,6 +272,8 @@ class TodoViewController:UIViewController{
             
             
         ])
+        
+        
         
         
     }
@@ -277,7 +379,7 @@ extension TodoViewController:UITableViewDelegate {
         let todo = todos?[section].todo[row]
             todos?[section].todo[row].isDone = true
             
-            let user = TodoModel(title: todo?.title ?? "", description: todo?.description ?? "", date: todo?.date ?? "", time: todo?.time ?? "", isDone: true)
+            let user = TodoModel(title: todo?.title ?? "", description: todo?.description ?? "", date: todo?.date ?? "", isDone: true)
             todoConfig.updateTask(id: todo?.id ?? 0, updatedTask: user)
             self.viewDidLoad()
          self.view.setNeedsLayout()

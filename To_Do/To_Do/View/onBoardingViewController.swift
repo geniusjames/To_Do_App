@@ -12,17 +12,7 @@ class onBoardingViewController: UIViewController {
     var coordinator:Coordinator?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = "onboarding"
-        let data = TodoModel(title: "James", description: "lets chat", date: "my date", time: "my time", isDone: true)
-        let data2 = TodoModel(title: "Abike", description: "nil", date: "my date", time: "my time", isDone: false)
-        let data3 = TodoModel(title: "Thomas", description: "nil", date: "my date", time: "my time", isDone: false)
-        let data4 = TodoModel(title: "Kelechi", description: "nil", date: "my date", time: "my time", isDone: false)
-        let data5 = TodoModel(title: "Mummy", description: "nil", date: "my date", time: "my time", isDone: false)
-
-        let todo = TodoConfig()
-        todo.createTask(task: data3)
-        todo.createTask(task: data2)
+      
 
         setUpViews()
         addConstraints()
