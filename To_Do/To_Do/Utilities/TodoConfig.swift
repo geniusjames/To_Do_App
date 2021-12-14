@@ -7,8 +7,7 @@
 
 import Foundation
 
-class TodoConfig{
-    
+class TodoConfig {
     let userDefault = UserDefaults.standard
     var count: Int
     var data: [String:Data]?
@@ -50,10 +49,10 @@ class TodoConfig{
             }
     }
     func fetchTask() -> [TodoModel]{
-        let decodeer = JSONDecoder()
+        let decoder = JSONDecoder()
         if let savedTasksEncoded = (userDefault.dictionary(forKey: "key2")) as? [String:Data] {
            let tasks = savedTasksEncoded.map{ keys, data -> TodoModel in
-               let decodedTask: TodoModel = try! decodeer.decode(TodoModel.self, from: data)
+               let decodedTask: TodoModel = try! decoder.decode(TodoModel.self, from: data)
               
                return decodedTask
             }
@@ -63,3 +62,4 @@ class TodoConfig{
         return []
     }
 }
+

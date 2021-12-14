@@ -13,5 +13,5 @@ struct TodoModel: Codable{
     var description: String
     var date: String
     var time: String
-    var isDone: Bool
+    var isDone: Bool = false
 }

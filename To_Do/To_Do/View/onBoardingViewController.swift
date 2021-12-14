@@ -8,6 +8,7 @@
 import UIKit
 
 class onBoardingViewController: UIViewController {
+    let todo = TodoConfig()
     var coordinator:Coordinator?
     override func viewDidLoad() {
         super.viewDidLoad()
