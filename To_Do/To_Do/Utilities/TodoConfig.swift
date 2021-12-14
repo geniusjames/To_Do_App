@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TodoConfig{
+class TodoConfig {
     
     let userDefault = UserDefaults.standard
     var count: Int
@@ -66,3 +66,4 @@ class TodoConfig{
         return []
     }
 }
+

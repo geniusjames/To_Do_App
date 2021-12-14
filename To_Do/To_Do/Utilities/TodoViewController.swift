@@ -26,11 +26,9 @@ class Todo{
 
 class TodoViewController:UIViewController{
     var coordinator:Coordinator?
+    var todoConfig = TodoConfig()
     
-    let pending:[Todo] = ["Eat", "Drink", "Code", "Sleep", "Repeat"].compactMap({Todo(id:3, title: $0, date: "")})
-    
-    let done:[Todo] = ["Joke", "Relax", "Fuck", "Sleep", "Repeat"].compactMap({Todo(id:5, title: $0, date: "", isDone: true)})
-    
+   
     var todos = [
         
         (title : "Pending", todo : [Todo(id: 4, title: "Go to the end of the  Eat", date: "Later", isDone: false), Todo(id: 6, title: "cook everything cookable", date: "today")
@@ -42,7 +40,8 @@ class TodoViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        var todoList = todoConfig.fetchTask()
+        print(todoList)
         view.setBack(navigationController: self.navigationController!)
         title = "Todo List"
     }
@@ -82,18 +81,44 @@ class TodoViewController:UIViewController{
     }()
     
     
-//    func popUp(_sender: UIButton) {
-//
-////        let alert = UIAlertController(title: "Add Todo", message: "Add your list of jobs", preferredStyle: .actionSheet)
-////        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-////        present(alert, animated: true)
-//
-//        UIView.animate(withDuration: 0.3, animations: {
-//            )
-////        }, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
-//    }
-//
-//}
+    
+    private let closeButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let image = UIImage(systemName: "clear.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28, weight: .medium))
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        return button
+    }()
+    
+    private var isBootomViewActive = false
+    
+    @objc func popUp() {
+        if isBootomViewActive {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.bottomView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                self.view.layoutIfNeeded()
+        }) {(status) in
+            
+            self.isBootomViewActive = false
+        }
+        }
+        else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.bottomView.heightAnchor.constraint(equalToConstant: 430).isActive = true
+//                self.fab.setImage(UIImage(systemName: "clear"), for: .normal)
+                self.view.layoutIfNeeded()
+            }) {(status)  in
+                
+                self.isBootomViewActive = true
+                print(self.isBootomViewActive)
+            }
+            
+        }
+      
+    }
+
+
     
     func setUpTableView(){
         tableView.dataSource = self
@@ -104,10 +129,15 @@ class TodoViewController:UIViewController{
     
     
     func setUpView(){
+        
+        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
+        
+//        bottomView.addSubview(closeButton)
         bottomView.backgroundColor = .red
         view.addSubviews(tableView, fab, bottomView)
         
 //        fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
+//        closeButton.addTarget(self, action: #selector(popUp), for: .touchUpInside)
         
 //        fab.frame = CGRect(x: view.frame.size.width - 70, y: view.frame.size.height - 1000, width: 60, height: 60)
         
@@ -123,14 +153,12 @@ class TodoViewController:UIViewController{
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            bottomView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.0),
+
             
-            fab.bottomAnchor.constraint(equalTo: layout.bottomAnchor, constant: -30),
+            fab.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: -30),
             fab.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
             fab.widthAnchor.constraint(equalToConstant: 60),
             fab.heightAnchor.constraint(equalToConstant: 60)
-            
-            
             
             
         ])

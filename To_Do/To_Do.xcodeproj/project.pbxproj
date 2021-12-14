@@ -16,6 +16,8 @@
 		0478C3E627651E9100AE5FB0 /* TextFieldLeftPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */; };
 		0478C3E82765233700AE5FB0 /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E72765233700AE5FB0 /* TableViewModel.swift */; };
 		0478C3EA276523E300AE5FB0 /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E9276523E300AE5FB0 /* TodoCell.swift */; };
+		0478C3EE27678AFE00AE5FB0 /* TodoConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F7ECAA2764F787008E56A2 /* TodoConfig.swift */; };
+		0478C3F027679A8C00AE5FB0 /* DetailVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3EF27679A8C00AE5FB0 /* DetailVIewController.swift */; };
 		B463896A2764D9DF007C5E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46389692764D9DF007C5E1D /* AppDelegate.swift */; };
 		B463896C2764D9DF007C5E1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463896B2764D9DF007C5E1D /* SceneDelegate.swift */; };
 		B463896E2764D9DF007C5E1D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463896D2764D9DF007C5E1D /* ViewController.swift */; };
@@ -24,7 +26,6 @@
 		B46389812764D9E0007C5E1D /* To_DoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46389802764D9E0007C5E1D /* To_DoTests.swift */; };
 		B463898B2764D9E0007C5E1D /* To_DoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463898A2764D9E0007C5E1D /* To_DoUITests.swift */; };
 		B463898D2764D9E0007C5E1D /* To_DoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463898C2764D9E0007C5E1D /* To_DoUITestsLaunchTests.swift */; };
-		B4F7ECAB2764F787008E56A2 /* TodoConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F7ECAA2764F787008E56A2 /* TodoConfig.swift */; };
 		B4F7ECAD2764F7A6008E56A2 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F7ECAC2764F7A6008E56A2 /* TodoModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLeftPadding.swift; sourceTree = "<group>"; };
 		0478C3E72765233700AE5FB0 /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
 		0478C3E9276523E300AE5FB0 /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
+		0478C3EF27679A8C00AE5FB0 /* DetailVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVIewController.swift; sourceTree = "<group>"; };
 		B46389662764D9DF007C5E1D /* To_Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = To_Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46389692764D9DF007C5E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B463896B2764D9DF007C5E1D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				0478C3E12764EEDB00AE5FB0 /* onBoardingViewController.swift */,
 				0478C3E72765233700AE5FB0 /* TableViewModel.swift */,
 				0478C3E9276523E300AE5FB0 /* TodoCell.swift */,
+				0478C3EF27679A8C00AE5FB0 /* DetailVIewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 		0478C3D52764EBA500AE5FB0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				B4F7ECAA2764F787008E56A2 /* TodoConfig.swift */,
 				0478C3E327651E0200AE5FB0 /* UIView+Extensions.swift */,
 				0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */,
 			);
@@ -162,7 +166,6 @@
 		B463895D2764D9DF007C5E1D = {
 			isa = PBXGroup;
 			children = (
-				B4F7ECA92764F71D008E56A2 /* Helper */,
 				B4F7ECA82764F715008E56A2 /* Model */,
 				B46389682764D9DF007C5E1D /* To_Do */,
 				B463897F2764D9E0007C5E1D /* To_DoTests */,
@@ -219,14 +222,6 @@
 				B4F7ECAC2764F7A6008E56A2 /* TodoModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		B4F7ECA92764F71D008E56A2 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				B4F7ECAA2764F787008E56A2 /* TodoConfig.swift */,
-			);
-			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,6 +357,7 @@
 				0478C3E627651E9100AE5FB0 /* TextFieldLeftPadding.swift in Sources */,
 				0478C3D82764EC0500AE5FB0 /* Coordinator.swift in Sources */,
 				0478C3E82765233700AE5FB0 /* TableViewModel.swift in Sources */,
+				0478C3EE27678AFE00AE5FB0 /* TodoConfig.swift in Sources */,
 				0478C3DE2764ED1200AE5FB0 /* MainCoordinator.swift in Sources */,
 				B4F7ECAD2764F7A6008E56A2 /* TodoModel.swift in Sources */,
 				0478C3E02764ED3B00AE5FB0 /* TodoViewController.swift in Sources */,
@@ -369,6 +365,7 @@
 				0478C3E22764EEDB00AE5FB0 /* onBoardingViewController.swift in Sources */,
 				0478C3EA276523E300AE5FB0 /* TodoCell.swift in Sources */,
 				B463896E2764D9DF007C5E1D /* ViewController.swift in Sources */,
+				0478C3F027679A8C00AE5FB0 /* DetailVIewController.swift in Sources */,
 				B463896A2764D9DF007C5E1D /* AppDelegate.swift in Sources */,
 				B463896C2764D9DF007C5E1D /* SceneDelegate.swift in Sources */,
 				0478C3DA2764EC7C00AE5FB0 /* Event.swift in Sources */,

@@ -39,7 +39,7 @@ class MainCoordinator: Coordinator{
         
         let firstTime = UserDefaults.standard.value(forKey: "isFirstTime") ?? true
         
-        if firstTime as! Bool {
+        if  firstTime as! Bool {
             showTodoScreen()
             
         }
