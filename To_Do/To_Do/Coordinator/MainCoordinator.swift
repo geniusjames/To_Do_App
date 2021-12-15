@@ -21,7 +21,7 @@ class MainCoordinator: Coordinator{
     }
     
    
-    func eventOccurred(with type: Event, todoTitle:String = "") {
+    func eventOccurred(with type: Event, todoId:Int) {
         switch type {
             
         
@@ -29,9 +29,14 @@ class MainCoordinator: Coordinator{
             print("todo screen")
         case .detail:
             let vc = ViewController()
-            vc.todoTitle = todoTitle
+            vc.todoId = todoId
             vc.coordinator = self
-            navigationController?.pushViewController(vc, animated: false)
+            navigationController?.pushViewController(vc, animated: true)
+        case .todolist:
+            let vc = TodoViewController()
+            vc.coordinator = self
+            navigationController?.pushViewController(vc, animated: true)
+            
         }
     }
     

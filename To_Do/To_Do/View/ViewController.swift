@@ -10,11 +10,11 @@ import UIKit
 class ViewController: UIViewController{
     var coordinator:Coordinator?
     
-    var todoTitle = "Todo List"
+    var todoId = 0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "\(todoTitle)"
+        title = "\(todoId)"
         addSubviews()
         setUpView()
     }
