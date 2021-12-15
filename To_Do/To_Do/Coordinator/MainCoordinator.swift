@@ -24,7 +24,7 @@ class MainCoordinator: Coordinator{
     func eventOccurred(with type: Event, todoTitle:String = "") {
         switch type {
             
-       
+        
         case .todo:
             print("todo screen")
         case .detail:
@@ -37,7 +37,7 @@ class MainCoordinator: Coordinator{
     
     func start() {
         
-        let firstTime = UserDefaults.standard.value(forKey: "isFirstTime") ?? true
+        let firstTime = UserDefaults.standard.value(forKey: "isFirstTime") ?? false
         
         if  firstTime as! Bool {
             showTodoScreen()
