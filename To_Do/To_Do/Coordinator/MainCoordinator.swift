@@ -31,25 +31,25 @@ class MainCoordinator: Coordinator{
             let vc = ViewController()
             vc.todoId = todoId
             vc.coordinator = self
-            navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: false)
         case .todolist:
             let vc = TodoViewController()
             vc.coordinator = self
-            navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: false)
             
         }
     }
     
     func start() {
         
-        let firstTime = UserDefaults.standard.value(forKey: "isFirstTime") ?? false
+        let firstTime = UserDefaults.standard.value(forKey: "isFirstTime") ?? true
         
         if  firstTime as! Bool {
-            showTodoScreen()
+            showOnboardingScreen()
             
         }
         else {
-            showOnboardingScreen()
+            showTodoScreen()
         }
         
     
@@ -57,6 +57,7 @@ class MainCoordinator: Coordinator{
     
     func showOnboardingScreen() {
         let onboardingController = onBoardingViewController()
+        UserDefaults.standard.set(false, forKey: "isFirstTime")
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         onboardingController.coordinator = self

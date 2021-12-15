@@ -24,7 +24,6 @@ class TodoViewController:UIViewController{
                 
                 if todoList[i].isDone == false {
                     pending.append(todoList[i])
-                    
                 }
                 else {
                     completed.append(todoList[i])
@@ -42,6 +41,7 @@ class TodoViewController:UIViewController{
         navigationItem.hidesBackButton = true
         let todoList = todoConfig.fetchTask()
         
+        tableView.reloadData()
         todos = separate(todoList)
         createDatePicker()
         setUpTableView()
@@ -54,7 +54,7 @@ class TodoViewController:UIViewController{
         
     }
     
-    private lazy var tableView: UITableView = {
+     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.frame = view.frame
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -205,7 +205,6 @@ class TodoViewController:UIViewController{
     var param = [String:String]()
     
     @objc func save() {
-        
         param["title"] =  todoTitle.text
         param["desc"]  = todoDescription.text
         param["date"]  = todoDateTime.text
@@ -291,7 +290,6 @@ class TodoViewController:UIViewController{
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            
             
             fab.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: -30),
             fab.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
@@ -408,19 +406,19 @@ extension TodoViewController:UITableViewDelegate {
         let row = indexPath.row
         
         let completed = UIContextualAction(style: .normal, title: "Completed") {[self] (action, view, completionHandler) in
-            tableView.beginUpdates()
-            gotoTodoPage()
             let todo = todos?[section].todo[row]
             todos?[section].todo[row].isDone = true
-            
+            tableView.beginUpdates()
             let user = TodoModel(title: todo?.title ?? "", description: todo?.description ?? "", date: todo?.date ?? "", isDone: true)
             todoConfig.updateTask(id: todo?.id ?? 0, updatedTask: user)
-            gotoTodoPage()
-            self.viewDidLoad()
-            self.view.setNeedsLayout()
+           
             tableView.reloadData()
-            tableView.endUpdates()
+            gotoTodoPage()
+            self.view.setNeedsLayout()
+            view.reloadInputViews()
             completionHandler(true)
+            tableView.endUpdates()
+
         }
         
         completed.image = UIImage(systemName: "checkmark")

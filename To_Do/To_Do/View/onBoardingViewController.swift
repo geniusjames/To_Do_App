@@ -2,7 +2,7 @@
 //  onBoardingViewController.swift
 //  To_Do
 //
-//  Created by Decagon on 12/11/21.
+//  Created by Geniusjames on 12/11/21.
 //
 
 import UIKit
@@ -12,14 +12,11 @@ class onBoardingViewController: UIViewController {
     var coordinator:Coordinator?
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-
         setUpViews()
         addConstraints()
         next()
         animate()
     }
-    
     lazy var addTaskImage: UIImageView = {
         let iv = UIImageView()
         let image = UIImage(named: "add")
@@ -187,7 +184,7 @@ class onBoardingViewController: UIViewController {
         instructionsLabel.translatesAutoresizingMaskIntoConstraints = false
         instructionsLabel.bottomAnchor.constraint(equalTo: pointDown.topAnchor, constant: 3).isActive = true
         instructionsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
+        
         
     }
     var backgroundColor = UIColor(red: 212/255, green: 241/255, blue: 255/255, alpha: 1)
@@ -202,14 +199,14 @@ class onBoardingViewController: UIViewController {
     func animate(){
         UIView.animate(withDuration: 0.7, animations: {
             self.pointDown.frame = CGRect(x: 60, y: 400, width: 200, height: 200)
-        
+            
         })
     }
     func next(){
         nextButton.addTarget(self, action: #selector(displayInstructions), for: .touchUpInside)
     }
-    func gotoDetailsPage(todo:String){
-        coordinator?.eventOccurred(with: .detail, todoTitle: todo)
+    func gotoDetailsPage(todo:Int){
+        coordinator?.eventOccurred(with: .todolist, todoId: todo)
     }
     var count = 0
     @objc func displayInstructions(){
@@ -226,7 +223,7 @@ class onBoardingViewController: UIViewController {
             
             UIView.animate(withDuration: 0.7, animations: {
                 self.arrow.frame = CGRect(x: 60, y: 0, width: 200, height: 200)
-            
+                
             })
         }
         if count == 2{
@@ -241,7 +238,7 @@ class onBoardingViewController: UIViewController {
             
             UIView.animate(withDuration: 0.7, animations: {
                 self.arrowMarkDone.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-            
+                
             })
             
         }
@@ -249,20 +246,17 @@ class onBoardingViewController: UIViewController {
             markDoneImage.isHidden = true
             arrowMarkDone.isHidden = true
             markDoneInstruction.isHidden = true
-
             deleteImage.isHidden = false
             deleteInstruction.isHidden = false
             arrowDelete.isHidden = false
             nextButton.setTitle("Welcome", for: .normal)
             view.backgroundColor = backgroundColor
-            
             UIView.animate(withDuration: 0.7, animations: {
                 self.arrowDelete.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-            
             })
         }
         if count == 4 {
-            gotoDetailsPage(todo: "")
+            gotoDetailsPage(todo: 2)
             view.backgroundColor = .white
         }
     }
