@@ -9,48 +9,58 @@ import UIKit
 
 class ViewController: UIViewController{
     var coordinator:Coordinator?
-    
+    let userDefault = UserDefaults.standard
     var todoId = 0;
+    var todoConfig = TodoConfig()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "\(todoId)"
         addSubviews()
         setUpView()
+        updateFields()
     }
     func addSubviews(){
         let barItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editTask))
         self.navigationItem.rightBarButtonItem = barItem
         view.addSubviews(date)
-        view.addSubviews(time)
         view.addSubviews(todoDescription)
         view.addSubviews(updateButton)
+        view.addSubviews(editTitle)
     }
     lazy var date: UILabel = {
         let label = UILabel()
         label.text = "Date"
-        label.backgroundColor = . yellow
         return label
     }()
-    lazy var time: UILabel = {
-        let label = UILabel()
-        label.text = "Time"
-        return label
-    }()
+
     lazy var todoDescription: UITextView = {
         let textView = UITextView()
-        textView.layer.cornerRadius = 20
+        textView.layer.cornerRadius = 5
         textView.backgroundColor = .clear
-//        textView.isEnabled = false
+        textView.layer.borderColor = CGColor(red: 222/255, green: 222/255, blue: 222/255, alpha: 1)
+        textView.isEditable = false
+        //        textView.isEnabled = false
         
         return textView
+    }()
+    lazy var editTitle: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 3
+        textField.placeholder = "Title"
+        textField.backgroundColor = .clear
+        textField.borderStyle = .roundedRect
+        textField.isEnabled = false
+        //        textView.isEnabled = false
+            
+        return textField
     }()
     lazy var updateButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 13
         button.setTitle("Update", for: .normal)
         button.isHidden = true
-        button.backgroundColor = .systemRed
+        button.backgroundColor = .systemGreen
         
         return button
     }()
@@ -64,13 +74,13 @@ class ViewController: UIViewController{
         date.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         date.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20).isActive = true
         
-        time.translatesAutoresizingMaskIntoConstraints = false
-        time.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 20).isActive = true
-        time.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        time.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20).isActive = true
+        editTitle.translatesAutoresizingMaskIntoConstraints = false
+        editTitle.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 20).isActive = true
+        editTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        editTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
         todoDescription.translatesAutoresizingMaskIntoConstraints = false
-        todoDescription.topAnchor.constraint(equalTo: time.bottomAnchor, constant: 20).isActive = true
+        todoDescription.topAnchor.constraint(equalTo: editTitle.bottomAnchor, constant: 20).isActive = true
         todoDescription.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         todoDescription.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         todoDescription.heightAnchor.constraint(equalToConstant: height * 0.3).isActive = true
@@ -80,10 +90,16 @@ class ViewController: UIViewController{
         updateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         updateButton.widthAnchor.constraint(equalToConstant: screen.width * 0.4).isActive = true
         updateButton.heightAnchor.constraint(equalToConstant: height * 0.05).isActive = true
-        
+
     }
+    let backgroundColor = UIColor(red: 212/255, green: 241/255, blue: 255/255, alpha: 1)
+
     @objc func editTask(){
-        todoDescription.backgroundColor = .lightGray
+        todoDescription.backgroundColor = backgroundColor
+        editTitle.backgroundColor = backgroundColor
+        todoDescription.isEditable = true
+        editTitle.isEnabled = true
+        
         updateButton.isHidden = true
         let barItem = UIBarButtonItem(title: "Update", style: .done, target: self, action: #selector(updateTask))
         barItem.tintColor = .systemRed
@@ -91,12 +107,24 @@ class ViewController: UIViewController{
         view.reloadInputViews()
     }
     @objc func updateTask(){
+        let currentTask = todoConfig.fetchCurrentTask(id: todoId)
+
+        
         todoDescription.backgroundColor = .clear
+        editTitle.backgroundColor = .clear
         updateButton.isHidden = true
         let barItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editTask))
         self.navigationItem.rightBarButtonItem = barItem
+        todoConfig.updateTask(id: todoId, updatedTask: TodoModel(id: todoId, title: editTitle.text ?? "", description: todoDescription.text, date: currentTask.date, isDone: currentTask.isDone))
+
         view.reloadInputViews()
     }
-    
+    func updateFields(){
+        let currentTask = todoConfig.fetchCurrentTask(id: todoId)
+        navigationItem.title = currentTask.title
+        editTitle.text = currentTask.title
+        todoDescription.text = currentTask.description
+        date.text = currentTask.date
+    }
 }
 
