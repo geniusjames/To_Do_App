@@ -10,25 +10,26 @@ import UIKit
 class TodoViewController:UIViewController{
     var coordinator:Coordinator?
     var todoConfig = TodoConfig()
+    var datePicker = UIDatePicker()
     
     var todos:[(title: String, todo: [TodoModel])]?
     
     func separate(_ todoList: [TodoModel]) -> [(title: String, todo: [TodoModel])]{
-            var pending = [TodoModel]()
+        var pending = [TodoModel]()
         var completed = [TodoModel]()
         
         if todoList.count > 0{
-        
-        for i in 0...todoList.count - 1 {
             
-            if todoList[i].isDone == false {
-                pending.append(todoList[i])
-           
+            for i in 0...todoList.count - 1 {
+                
+                if todoList[i].isDone == false {
+                    pending.append(todoList[i])
+                    
+                }
+                else {
+                    completed.append(todoList[i])
+                }
             }
-            else {
-                completed.append(todoList[i])
-            }
-        }
         }
         return [(title: "pending", todo: pending), (title: "completed", todo: completed) ]
     }
@@ -41,18 +42,18 @@ class TodoViewController:UIViewController{
         navigationItem.hidesBackButton = true
         let todoList = todoConfig.fetchTask()
         
-         todos = separate(todoList)
-        
+        todos = separate(todoList)
+        createDatePicker()
         setUpTableView()
-
-
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
         setUpView()
-
+        
     }
-
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.frame = view.frame
@@ -61,11 +62,11 @@ class TodoViewController:UIViewController{
         return tableView
     }()
     
-     var bottomView:UIView = {
+    var bottomView:UIView = {
         let view = UIView()
-         view.layer.borderColor = UIColor.black.cgColor
-         view.layer.borderWidth = 1
-         view.backgroundColor = .white
+        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderWidth = 1
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 40
         return view
@@ -113,7 +114,7 @@ class TodoViewController:UIViewController{
         return textField
     }()
     
-
+    
     
     var todoDateTime:TextFieldLeftPadding = {
         var textField = TextFieldLeftPadding()
@@ -136,10 +137,34 @@ class TodoViewController:UIViewController{
         btn.backgroundColor = .systemBlue
         return btn
     }()
-
     
-
-
+    
+    
+    func createToolBar() -> UIToolbar {
+            let toolBar = UIToolbar()
+            toolBar.sizeToFit()
+            let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(onClick))
+            toolBar.setItems([doneBtn], animated: true)
+            return toolBar
+        }
+    @objc func onClick(){
+            let dateFormatter = DateFormatter() // formats the style of the datePicker
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            self.todoDateTime.text = dateFormatter.string(from: datePicker.date)
+            self.view.endEditing(true) // makes the doneButton in the datePicker functional
+        }
+    func createDatePicker(){
+            datePicker.preferredDatePickerStyle = .wheels
+            todoDateTime.textAlignment = .justified
+            datePicker.datePickerMode = .date
+            todoDateTime.inputView = datePicker
+            todoDateTime.inputAccessoryView = createToolBar()
+        }
+    
+    
+    
+    
     
     private var isBootomViewActive = false
     
@@ -152,13 +177,13 @@ class TodoViewController:UIViewController{
             }
             UIView.animate(withDuration: 0.3, animations: {
                 
-             self.bottomView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                self.bottomView.heightAnchor.constraint(equalToConstant: 0).isActive = true
                 self.view.layoutIfNeeded()
-        
+                
                 
             }) {(status) in
-            self.isBootomViewActive = false
-               
+                self.isBootomViewActive = false
+                
             }
         }
         else {
@@ -173,14 +198,14 @@ class TodoViewController:UIViewController{
                 self.isBootomViewActive = true
             }
         }
-}
+    }
     
     
     
     var param = [String:String]()
     
     @objc func save() {
-
+        
         param["title"] =  todoTitle.text
         param["desc"]  = todoDescription.text
         param["date"]  = todoDateTime.text
@@ -199,7 +224,7 @@ class TodoViewController:UIViewController{
         todoDescription.text = ""
         todoDateTime.text = ""
         
-            
+        
     }
     
     
@@ -212,11 +237,11 @@ class TodoViewController:UIViewController{
     
     
     func setUpView(){
-    
+        
         fab.setImage(add, for: .normal)
         fab.addTarget(self, action: #selector(popUp), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
-       
+        
         bottomView.addSubview(todoTitle)
         bottomView.addSubview(todoDescription)
         bottomView.addSubview(todoDateTime)
@@ -226,17 +251,17 @@ class TodoViewController:UIViewController{
         NSLayoutConstraint.activate([
             
             todoTitle.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 30),
-           
+            
             todoTitle.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 15),
             todoTitle.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -15),
             
             todoDescription.topAnchor.constraint(equalTo:todoTitle.bottomAnchor, constant: 20),
-           
+            
             todoDescription.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 15),
             todoDescription.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -15),
             
             todoDateTime.topAnchor.constraint(equalTo:todoDescription.bottomAnchor, constant: 20),
-           
+            
             todoDateTime.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 15),
             todoDateTime.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -15),
             
@@ -252,21 +277,21 @@ class TodoViewController:UIViewController{
         
         view.addSubviews(tableView, fab, bottomView)
         
-
+        
         
         let layout = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             
             tableView.topAnchor.constraint(equalTo: layout.topAnchor, constant: 5),
-                        tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
-                        tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
-                        tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo:layout.bottomAnchor),
             
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomView.widthAnchor.constraint(equalTo: view.widthAnchor),
-
+            
             
             fab.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: -30),
             fab.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
@@ -322,7 +347,7 @@ extension TodoViewController:UITableViewDataSource{
         
     }
     
-
+    
     
 }
 
@@ -330,7 +355,7 @@ extension TodoViewController:UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
+        
         if todos?[section].todo.count ?? 0 <= 0  {
             return nil
         }
@@ -385,14 +410,14 @@ extension TodoViewController:UITableViewDelegate {
         let completed = UIContextualAction(style: .normal, title: "Completed") {[self] (action, view, completionHandler) in
             tableView.beginUpdates()
             gotoTodoPage()
-        let todo = todos?[section].todo[row]
+            let todo = todos?[section].todo[row]
             todos?[section].todo[row].isDone = true
             
             let user = TodoModel(title: todo?.title ?? "", description: todo?.description ?? "", date: todo?.date ?? "", isDone: true)
             todoConfig.updateTask(id: todo?.id ?? 0, updatedTask: user)
             gotoTodoPage()
             self.viewDidLoad()
-         self.view.setNeedsLayout()
+            self.view.setNeedsLayout()
             tableView.reloadData()
             tableView.endUpdates()
             completionHandler(true)

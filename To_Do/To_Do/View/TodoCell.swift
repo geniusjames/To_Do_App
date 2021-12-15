@@ -12,7 +12,6 @@ import UIKit
 class TodoCell: UITableViewCell {
     
     static let reuseIdentifier = "TodoCell"
-    let tableViewModel = TableViewModel()
     
     
     let todoLabel:UILabel = {
@@ -40,7 +39,7 @@ class TodoCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         todoLabel.text = nil
@@ -54,7 +53,7 @@ class TodoCell: UITableViewCell {
         
     }
     
-
+    
     private func updateUI(title:String?, image:String, color:UIColor){
         checkbox.image = UIImage(systemName: image)
         checkbox.tintColor = color
@@ -73,12 +72,12 @@ class TodoCell: UITableViewCell {
             checkbox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             checkbox.widthAnchor.constraint(equalToConstant: 30),
             checkbox.heightAnchor.constraint(equalToConstant: 30),
-
+            
             todoLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             todoLabel.leadingAnchor.constraint(equalTo: checkbox.leadingAnchor, constant: 40),
             todoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             todoLabel.heightAnchor.constraint(equalToConstant: 30),
-
+            
         ])
     }
     
