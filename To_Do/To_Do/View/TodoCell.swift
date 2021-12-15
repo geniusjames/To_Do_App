@@ -32,9 +32,6 @@ class TodoCell: UITableViewCell {
     }()
     
     
-    
-    
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpView()
@@ -43,12 +40,7 @@ class TodoCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//
-//    override func layoutSubviews() {
-//
-//    }
-//
+
     override func prepareForReuse() {
         super.prepareForReuse()
         todoLabel.text = nil
@@ -73,12 +65,20 @@ class TodoCell: UITableViewCell {
     
     
     func setUpView(){
-        contentView.addSubviews(checkbox, todoLabel)
+        self.addSubviews(checkbox, todoLabel)
+        
+        
         NSLayoutConstraint.activate([
-            checkbox.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            checkbox.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            todoLabel.leadingAnchor.constraint(equalTo: checkbox.leadingAnchor, constant: 30),
-            todoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)
+            checkbox.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            checkbox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            checkbox.widthAnchor.constraint(equalToConstant: 30),
+            checkbox.heightAnchor.constraint(equalToConstant: 30),
+
+            todoLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            todoLabel.leadingAnchor.constraint(equalTo: checkbox.leadingAnchor, constant: 40),
+            todoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            todoLabel.heightAnchor.constraint(equalToConstant: 30),
+
         ])
     }
     

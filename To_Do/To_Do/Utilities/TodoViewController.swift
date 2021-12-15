@@ -17,8 +17,10 @@ class TodoViewController:UIViewController{
             var pending = [TodoModel]()
         var completed = [TodoModel]()
         
+        if todoList.count > 0{
         
         for i in 0...todoList.count - 1 {
+            
             if todoList[i].isDone == false {
                 pending.append(todoList[i])
            
@@ -26,6 +28,7 @@ class TodoViewController:UIViewController{
             else {
                 completed.append(todoList[i])
             }
+        }
         }
         return [(title: "pending", todo: pending), (title: "completed", todo: completed) ]
     }
@@ -35,18 +38,21 @@ class TodoViewController:UIViewController{
         super.viewDidLoad()
         view.setBack(navigationController: self.navigationController!)
         title = "Todo List"
-    
+        navigationItem.hidesBackButton = true
         let todoList = todoConfig.fetchTask()
         
          todos = separate(todoList)
+        
+        setUpTableView()
+
 
     }
     
     override func viewDidLayoutSubviews() {
         setUpView()
-        setUpTableView()
+
     }
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.frame = view.frame
@@ -116,7 +122,6 @@ class TodoViewController:UIViewController{
         textField.autocorrectionType = .no
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        textField.widthAnchor.constraint(equalToConstant: 170).isActive = true
         textField.layer.borderWidth = 1
         textField.layer.cornerRadius = 10
         return textField
@@ -142,7 +147,9 @@ class TodoViewController:UIViewController{
         
         if isBootomViewActive {
             self.fab.setImage(self.cancel, for: .normal)
-            self.bottomView.removeConstraint(bottomView.constraints.last!)
+            for i in self.bottomView.constraints{
+                self.bottomView.removeConstraint(i)
+            }
             UIView.animate(withDuration: 0.3, animations: {
                 
              self.bottomView.heightAnchor.constraint(equalToConstant: 0).isActive = true
@@ -174,8 +181,8 @@ class TodoViewController:UIViewController{
     
     @objc func save() {
 
-        param["title"] =  todoTitle.text ?? ""
-        param["desc"]  = todoDescription.text ?? ""
+        param["title"] =  todoTitle.text
+        param["desc"]  = todoDescription.text
         param["date"]  = todoDateTime.text
         
         let todo = TodoModel(title: param["title"] ?? "",  description: param["desc"] ?? "", date: param["date"] ?? "")
@@ -184,12 +191,14 @@ class TodoViewController:UIViewController{
         tableView.reloadData()
         resetAllTextField()
         popUp()
+        gotoTodoPage()
     }
     
     func resetAllTextField() {
         todoTitle.text = ""
         todoDescription.text = ""
         todoDateTime.text = ""
+        
             
     }
     
@@ -273,8 +282,13 @@ class TodoViewController:UIViewController{
     }
     
     
-    func gotoDetailsPage(todo:String){
-        coordinator?.eventOccurred(with: .detail, todoTitle: todo)
+    func gotoDetailsPage(todo:Int){
+        coordinator?.eventOccurred(with: .detail, todoId:todo)
+        
+    }
+    
+    func gotoTodoPage(){
+        coordinator?.eventOccurred(with: .todolist, todoId: 0)
         
     }
 }
@@ -333,8 +347,8 @@ extension TodoViewController:UITableViewDelegate {
         
         let section = indexPath.section
         let row = indexPath.row
-        let todo = todos?[section].todo[row].title
-        gotoDetailsPage(todo: todo ?? "")
+        let todo = todos?[section].todo[row].id
+        gotoDetailsPage(todo: todo ?? 0)
         
     }
     
@@ -370,11 +384,13 @@ extension TodoViewController:UITableViewDelegate {
         
         let completed = UIContextualAction(style: .normal, title: "Completed") {[self] (action, view, completionHandler) in
             tableView.beginUpdates()
+            gotoTodoPage()
         let todo = todos?[section].todo[row]
             todos?[section].todo[row].isDone = true
             
             let user = TodoModel(title: todo?.title ?? "", description: todo?.description ?? "", date: todo?.date ?? "", isDone: true)
             todoConfig.updateTask(id: todo?.id ?? 0, updatedTask: user)
+            gotoTodoPage()
             self.viewDidLoad()
          self.view.setNeedsLayout()
             tableView.reloadData()
