@@ -60,9 +60,7 @@ class TodoCell: UITableViewCell {
         todoLabel.text = title
     }
     
-    
-    
-    
+
     func setUpView(){
         self.addSubviews(checkbox, todoLabel)
         

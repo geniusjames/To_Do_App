@@ -28,7 +28,7 @@ class MainCoordinator: Coordinator{
         case .todo:
             print("todo screen")
         case .detail:
-            let vc = ViewController()
+            let vc = DetailViewController()
             vc.todoId = todoId
             vc.coordinator = self
             navigationController?.pushViewController(vc, animated: false)

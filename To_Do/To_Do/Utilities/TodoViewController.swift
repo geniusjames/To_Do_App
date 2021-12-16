@@ -11,6 +11,7 @@ class TodoViewController:UIViewController{
     var coordinator:Coordinator?
     var todoConfig = TodoConfig()
     var datePicker = UIDatePicker()
+    var delegate:ReloadView?
     
     var todos:[(title: String, todo: [TodoModel])]?
     
@@ -36,6 +37,8 @@ class TodoViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         view.setBack(navigationController: self.navigationController!)
         title = "Todo List"
         navigationItem.hidesBackButton = true
@@ -45,13 +48,15 @@ class TodoViewController:UIViewController{
         todos = separate(todoList)
         createDatePicker()
         setUpTableView()
-        
-        
     }
     
+    override func viewWillAppear(_ animated:Bool) {
+       super.viewWillAppear(animated)
+       tableView.reloadData()
+    }
+
     override func viewDidLayoutSubviews() {
         setUpView()
-        
     }
     
      lazy var tableView: UITableView = {
@@ -429,6 +434,15 @@ extension TodoViewController:UITableViewDelegate {
         return swipe
     }
     
+    
+}
+
+extension TodoViewController:ReloadView{
+    func reloadTable() {
+        tableView.reloadData()
+    }
+    
+  
     
 }
 

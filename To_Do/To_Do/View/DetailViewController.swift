@@ -7,9 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController{
+class DetailViewController: UIViewController, UINavigationControllerDelegate{
     var coordinator:Coordinator?
     let userDefault = UserDefaults.standard
+    var delegate:ReloadView?
     var todoId = 0;
     var todoConfig = TodoConfig()
     
@@ -19,7 +20,14 @@ class ViewController: UIViewController{
         addSubviews()
         setUpView()
         updateFields()
-    }
+        
+ }
+
+//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+//        delegate?.reloadTable()
+//     
+// }
+    
     func addSubviews(){
         let barItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(editTask))
         self.navigationItem.rightBarButtonItem = barItem

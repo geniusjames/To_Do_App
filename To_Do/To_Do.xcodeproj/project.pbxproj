@@ -16,9 +16,10 @@
 		0478C3E627651E9100AE5FB0 /* TextFieldLeftPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */; };
 		0478C3EA276523E300AE5FB0 /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3E9276523E300AE5FB0 /* TodoCell.swift */; };
 		0478C3EE27678AFE00AE5FB0 /* TodoConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F7ECAA2764F787008E56A2 /* TodoConfig.swift */; };
+		0478C3F6276B595000AE5FB0 /* ReloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C3F5276B594E00AE5FB0 /* ReloadView.swift */; };
 		B463896A2764D9DF007C5E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46389692764D9DF007C5E1D /* AppDelegate.swift */; };
 		B463896C2764D9DF007C5E1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463896B2764D9DF007C5E1D /* SceneDelegate.swift */; };
-		B463896E2764D9DF007C5E1D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463896D2764D9DF007C5E1D /* ViewController.swift */; };
+		B463896E2764D9DF007C5E1D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B463896D2764D9DF007C5E1D /* DetailViewController.swift */; };
 		B46389732764D9E0007C5E1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B46389722764D9E0007C5E1D /* Assets.xcassets */; };
 		B46389762764D9E0007C5E1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B46389742764D9E0007C5E1D /* LaunchScreen.storyboard */; };
 		B46389812764D9E0007C5E1D /* To_DoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46389802764D9E0007C5E1D /* To_DoTests.swift */; };
@@ -53,10 +54,11 @@
 		0478C3E327651E0200AE5FB0 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		0478C3E527651E9100AE5FB0 /* TextFieldLeftPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLeftPadding.swift; sourceTree = "<group>"; };
 		0478C3E9276523E300AE5FB0 /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
+		0478C3F5276B594E00AE5FB0 /* ReloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadView.swift; sourceTree = "<group>"; };
 		B46389662764D9DF007C5E1D /* To_Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = To_Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46389692764D9DF007C5E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B463896B2764D9DF007C5E1D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B463896D2764D9DF007C5E1D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B463896D2764D9DF007C5E1D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B46389722764D9E0007C5E1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B46389752764D9E0007C5E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B46389772764D9E0007C5E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,7 +99,7 @@
 		0478C3CD2764EA9900AE5FB0 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B463896D2764D9DF007C5E1D /* ViewController.swift */,
+				B463896D2764D9DF007C5E1D /* DetailViewController.swift */,
 				0478C3DF2764ED3B00AE5FB0 /* TodoViewController.swift */,
 				0478C3E12764EEDB00AE5FB0 /* onBoardingViewController.swift */,
 				0478C3E9276523E300AE5FB0 /* TodoCell.swift */,
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				0478C3D72764EC0500AE5FB0 /* Coordinator.swift */,
+				0478C3F5276B594E00AE5FB0 /* ReloadView.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B46389902764D9E0007C5E1D /* Build configuration list for PBXNativeTarget "To_Do" */;
 			buildPhases = (
+				0478C3F4276AC64200AE5FB0 /* ShellScript */,
 				B46389622764D9DF007C5E1D /* Sources */,
 				B46389632764D9DF007C5E1D /* Frameworks */,
 				B46389642764D9DF007C5E1D /* Resources */,
@@ -343,6 +347,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0478C3F4276AC64200AE5FB0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B46389622764D9DF007C5E1D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -351,13 +375,14 @@
 				0478C3E627651E9100AE5FB0 /* TextFieldLeftPadding.swift in Sources */,
 				0478C3D82764EC0500AE5FB0 /* Coordinator.swift in Sources */,
 				0478C3EE27678AFE00AE5FB0 /* TodoConfig.swift in Sources */,
+				0478C3F6276B595000AE5FB0 /* ReloadView.swift in Sources */,
 				0478C3DE2764ED1200AE5FB0 /* MainCoordinator.swift in Sources */,
 				B4F7ECAD2764F7A6008E56A2 /* TodoModel.swift in Sources */,
 				0478C3E02764ED3B00AE5FB0 /* TodoViewController.swift in Sources */,
 				0478C3E427651E0200AE5FB0 /* UIView+Extensions.swift in Sources */,
 				0478C3E22764EEDB00AE5FB0 /* onBoardingViewController.swift in Sources */,
 				0478C3EA276523E300AE5FB0 /* TodoCell.swift in Sources */,
-				B463896E2764D9DF007C5E1D /* ViewController.swift in Sources */,
+				B463896E2764D9DF007C5E1D /* DetailViewController.swift in Sources */,
 				B463896A2764D9DF007C5E1D /* AppDelegate.swift in Sources */,
 				B463896C2764D9DF007C5E1D /* SceneDelegate.swift in Sources */,
 				0478C3DA2764EC7C00AE5FB0 /* Event.swift in Sources */,
