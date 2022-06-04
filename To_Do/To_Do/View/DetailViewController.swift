@@ -11,7 +11,7 @@ class DetailViewController: UIViewController, UINavigationControllerDelegate{
     var coordinator:Coordinator?
     let userDefault = UserDefaults.standard
     var delegate:ReloadView?
-    var todoId = 0;
+    lazy var todoId = 0;
     var todoConfig = TodoConfig()
     
     override func viewDidLoad() {
@@ -75,7 +75,6 @@ class DetailViewController: UIViewController, UINavigationControllerDelegate{
     func setUpView(){
         let screen = UIScreen.main.bounds
         let height = screen.height
-        
         
         date.translatesAutoresizingMaskIntoConstraints = false
         date.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true

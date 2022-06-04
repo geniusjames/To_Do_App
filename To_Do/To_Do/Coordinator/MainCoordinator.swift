@@ -9,8 +9,7 @@ import UIKit
 
 class MainCoordinator: Coordinator{
     
-    
-       
+
     var children: [Coordinator]? = nil
     var navigationController: UINavigationController?  = UINavigationController()
 
@@ -20,10 +19,8 @@ class MainCoordinator: Coordinator{
         self.window = window
     }
     
-   
     func eventOccurred(with type: Event, todoId:Int) {
         switch type {
-            
         
         case .todo:
             print("todo screen")
@@ -36,23 +33,17 @@ class MainCoordinator: Coordinator{
             let vc = TodoViewController()
             vc.coordinator = self
             navigationController?.pushViewController(vc, animated: false)
-            
         }
     }
     
     func start() {
-        
         let firstTime = UserDefaults.standard.value(forKey: "isFirstTime") ?? true
-        
         if  firstTime as! Bool {
             showOnboardingScreen()
-            
         }
         else {
             showTodoScreen()
         }
-        
-    
     }
     
     func showOnboardingScreen() {
@@ -67,16 +58,11 @@ class MainCoordinator: Coordinator{
     
     func showTodoScreen() {
         let todoViewController = TodoViewController()
-    
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         todoViewController.coordinator = self
         navigationController?.setViewControllers([todoViewController], animated: false)
-       
     }
-    
-    
-    
     
 }
 

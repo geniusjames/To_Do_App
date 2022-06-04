@@ -11,6 +11,7 @@ class TodoViewController:UIViewController{
     var coordinator:Coordinator?
     var todoConfig = TodoConfig()
     var datePicker = UIDatePicker()
+    
     var delegate:ReloadView?
     
     var todos:[(title: String, todo: [TodoModel])]?
@@ -34,7 +35,6 @@ class TodoViewController:UIViewController{
         return [(title: "pending", todo: pending), (title: "completed", todo: completed) ]
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +54,6 @@ class TodoViewController:UIViewController{
        super.viewWillAppear(animated)
        tableView.reloadData()
     }
-
     override func viewDidLayoutSubviews() {
         setUpView()
     }
@@ -133,7 +132,7 @@ class TodoViewController:UIViewController{
         return textField
     }()
     
-    let saveButton:UIButton = {
+    let saveButton: UIButton = {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("Save", for: .normal)
@@ -152,7 +151,7 @@ class TodoViewController:UIViewController{
             toolBar.setItems([doneBtn], animated: true)
             return toolBar
         }
-    @objc func onClick(){
+    @objc func onClick() {
             let dateFormatter = DateFormatter() // formats the style of the datePicker
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .none
@@ -206,9 +205,7 @@ class TodoViewController:UIViewController{
     }
     
     
-    
     var param = [String:String]()
-    
     @objc func save() {
         param["title"] =  todoTitle.text
         param["desc"]  = todoDescription.text
@@ -300,13 +297,7 @@ class TodoViewController:UIViewController{
             fab.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
             fab.widthAnchor.constraint(equalToConstant: 60),
             fab.heightAnchor.constraint(equalToConstant: 60)
-            
-            
         ])
-        
-        
-        
-        
     }
     
     
